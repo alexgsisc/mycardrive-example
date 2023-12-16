@@ -7,15 +7,15 @@ import {
   Patch,
   Post,
   Query,
-  UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { SerializeInterceptor } from '../interceptors/serialize.interceptor';
+import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 
 @Controller('auth')
+@Serialize(UserDto) // use global
 export class UsersController {
   constructor(private userService: UsersService) {}
 
@@ -25,7 +25,8 @@ export class UsersController {
     this.userService.create(body.email, body.password);
   }
 
-  @UseInterceptors(new SerializeInterceptor(UserDto))
+  //@UseInterceptors(new SerializeInterceptor(UserDto))
+  //@Serialize(UserDto) by service
   @Get('/:id')
   findUser(@Param('id') id: number) {
     return this.userService.findOne(id);

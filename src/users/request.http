@@ -35,3 +35,9 @@ content-type: application/json
 {
     "password": "123a-fg"
 }
+
+### Set a color  
+GET http://localhost:3000/auth/color/blue
+
+### Get the color
+GET http://localhost:3000/auth/colors
